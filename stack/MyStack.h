@@ -1,3 +1,5 @@
+#pragma once
+
 #define DEFAULT_SIZE 10
 
 class MyStack
