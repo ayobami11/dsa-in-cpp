@@ -1,38 +1,28 @@
 #include <iostream>
-#include "MyStack.h"
 
-// #include <stack> (there is also a built stack data structure; I don't think that is the focus of the course though.)
+#include "MyStack.h"
 
 using namespace std;
 
-int main () {
+int main() {
 
-	MyStack stack = MyStack(10);
+	MyStack *stack = new MyStack(10);
 
-	stack.push(1);
-	stack.push(2);
-	stack.push(3);
-	stack.push(4);
-	stack.push(5);
-	stack.push(6);
-	stack.push(7);
-	stack.push(8);
-	stack.push(9);
-	stack.push(10);
+	stack->push(10);
+	stack->push(20);
+	stack->push(30);
 
-	// stack.push(11);
+	for (int i = 0; i < 3; i++) {
+		cout << stack->pop() << endl;
+	}
 
-	cout << stack.pop() << endl;
-	cout << stack.pop() << endl;
+	stack->push(70);
 
-	cout << "\nElement at the top of the stack: " << stack.peek() << endl;
-	cout << "\nSize of the stack: " << stack.peek() << endl;
-
-	stack.print();
-
-	system("pause");
+	cout << stack->peek() << endl;
 
 	cout << endl;
+	
+	system("pause");
 
 	return 0;
 }

@@ -1,22 +1,21 @@
-#pragma once
+#define DEFAULT_SIZE 10
+
 class MyStack
 {
 private:
-    int *values;
-    int size;
-    int maxSize;
+	int size;
+	int top;
+	int* values;
 
 public:
-    MyStack(int max_size);
-    ~MyStack();
+	MyStack(int size = DEFAULT_SIZE);
+	virtual ~MyStack();
 
-    bool isEmpty();
-    bool isFull();
+	bool isEmpty();
+	bool isFull();
 
-    void push(int value);
-    int pop();
-    int peek();
-
-    int getSize();
-    void print();
+	void push(int);
+	int pop();
+	int peek();
 };
+
