@@ -9,9 +9,15 @@ int main()
 
     LinkedList *list = new LinkedList();
 
-    list->appendNode(10);
-    list->appendNode(20);
-    list->appendNode(30);
+    list->append(10);
+    list->append(20);
+    list->append(30);
+
+    list->insertAt(0, 5);
+    list->insertAfter(20, 25);
+
+    list->append(400);
+    list->deleteNode(400);
 
     list->displayNodes();
     list->displayNodesReverse();
