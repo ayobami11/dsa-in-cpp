@@ -9,9 +9,9 @@ int main()
 
     StackLinkedList *stack = new StackLinkedList();
 
-    stack->appendNode(10);
-    stack->appendNode(20);
-    stack->appendNode(30);
+    stack->push(10);
+    stack->push(20);
+    stack->push(30);
 
     stack->displayNodes();
     stack->displayNodesReverse();
