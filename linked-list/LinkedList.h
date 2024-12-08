@@ -2,36 +2,43 @@
 
 #include <iostream>
 
-struct Node {
+struct Node
+{
 
-	Node(int data) {
+	Node(int data)
+	{
 		this->data = data;
 		next = NULL;
 		prev = NULL;
 	}
 
 	int data;
-	Node* next;
-	Node* prev;
+	Node *next;
+	Node *prev;
 };
-
 
 class LinkedList
 {
 private:
-	Node* head;
-	Node* tail;
+	Node *head;
+	Node *tail;
+	int size;
+	void removeNode(Node *);
 
 public:
 	LinkedList(void);
 	~LinkedList(void);
 
-	void insertAt(int, int);
-	void insertAfter(int, int);
+	void removeNodeAt(int);
 	void deleteNode(int);
-	void append(int);
+	int findNode(int);
+	void insertNodeAt(int, int);
+	int peek(int);
+	int getSize();
+
+	void insertAfter(int, int);
+	void appendNode(int);
 	void displayNodes();
 	void displayNodesReverse();
 	void destroyList();
 };
-

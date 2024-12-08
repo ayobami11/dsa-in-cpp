@@ -8,6 +8,7 @@ LinkedList::LinkedList()
 {
     head = NULL;
     tail = NULL;
+    size = 0;
 }
 
 LinkedList::~LinkedList()
@@ -15,67 +16,163 @@ LinkedList::~LinkedList()
     destroyList();
 }
 
-// Inserts a new node at position n; n is zero-indexed with 0 representing the head of the list.
-void LinkedList::insertAt(int index, int data)
+void LinkedList::removeNode(Node *node)
 {
 
-    if (index < 0)
+    if (node->prev == NULL && node->next == NULL)
     {
-        cerr << "\nPlease provide a positive integer as an index.";
+        // node to be removed is the only node in the linked list
+        head = NULL;
+        tail = NULL;
+    }
+    else if (node->prev == NULL)
+    {
+        // node to be removed is the first node in the linked list
+        head = node->next;
+        node->next->prev = NULL;
+    }
+    else if (node->next == NULL)
+    {
+        // node to be removed is the last node in the linked list
+        tail = node->prev;
+        node->prev->next = NULL;
+    }
+    else
+    {
+        // node to be removed is somewhere in the middle of the linked list
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
     }
 
-    Node *newNode = new Node(data);
+    delete node;
+    size--;
+}
 
-    // insert at the head
-    if (index == 0)
+void LinkedList::removeNodeAt(int index)
+{
+
+    if (index < 0 || index >= size)
     {
-
-        if (head == NULL)
-        {
-            head = newNode;
-            tail = newNode;
-        }
-        else
-        {
-            newNode->next = head;
-            head->prev = newNode;
-
-            head = newNode;
-        }
-
         return;
     }
 
-    // insert somewhere in the middle of the list
     Node *current = head;
-    int count = 0;
+
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    removeNode(current);
+}
+
+void LinkedList::deleteNode(int data)
+{
+
+    Node *current = head;
 
     while (current != NULL)
     {
-
-        if (count == index)
+        if (current->data == data)
         {
-            newNode->next = current;
-            current->prev->next = newNode;
-            newNode->prev = current->prev;
-            current->prev = newNode;
+            removeNode(current);
             return;
         }
 
         current = current->next;
-        count++;
+    }
+}
+
+int LinkedList::findNode(int data)
+{
+
+    Node *current = head;
+    int index = 0;
+
+    while (current != NULL)
+    {
+        if (current->data == data)
+        {
+            return index;
+        }
+
+        current = current->next;
+        index++;
     }
 
-    // if we get to this point, we are at the tail of the list, so we insert at the tail if the index of incoming node matches the count.
-    if (index == count)
+    return -1;
+}
+
+void LinkedList::insertNodeAt(int index, int data)
+{
+
+    if (index < 0 || index > size)
     {
-        append(data);
+        return;
+    }
+
+    Node *newNode = new Node(data);
+
+    if (size == 0)
+    {
+        // the linked list is empty
+        head = newNode;
+        tail = newNode;
+    }
+    else if (index == 0)
+    {
+        // new node is to be inserted at the head
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+    else if (index == size)
+    {
+        // new node is to be inserted at the tail
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = newNode;
     }
     else
     {
-        cerr << "\nIndex is out of range.";
-        delete newNode;
+        // new node is to be inserted somewhere in the middle of the list
+        Node *current = head;
+
+        for (int i = 0; i < index; i++)
+        {
+            current = current->next;
+        }
+
+        newNode->next = current;
+        newNode->prev = current->prev;
+        current->prev->next = newNode;
+        current->prev = newNode;
     }
+
+    size++;
+}
+
+int LinkedList::peek(int index)
+{
+
+    if (index < 0 || index >= size)
+    {
+        return 0;
+    }
+
+    Node *current = head;
+
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    return current->data;
+}
+
+int LinkedList::getSize()
+{
+    return size;
 }
 
 // insert a new node after a specified Node with data of value
@@ -93,7 +190,7 @@ void LinkedList::insertAfter(int value, int data)
 
             if (current == tail)
             {
-                append(data);
+                appendNode(data);
             }
             else
             {
@@ -101,6 +198,8 @@ void LinkedList::insertAfter(int value, int data)
                 current->next->prev = newNode;
                 current->next = newNode;
                 newNode->prev = current;
+
+                size++;
             }
 
             return;
@@ -113,63 +212,8 @@ void LinkedList::insertAfter(int value, int data)
     cerr << "\nValue " << value << " was not found.";
 }
 
-void LinkedList::deleteNode(int value)
-{
-
-    if (head == NULL)
-        return;
-
-    Node *current = head;
-
-    // node to delete is at the head
-    if (current->data == value)
-    {
-        head = current->next;
-
-        if (head == NULL)
-        {
-            // if the node to be deleted is the only node in the list
-            tail = NULL;
-        }
-        else
-        {
-            head->prev = NULL;
-        }
-
-        // delete the old head
-        delete current;
-
-        return;
-    }
-
-    while (current != NULL)
-    {
-
-        if (current->data == value)
-        {
-
-            current->prev->next = current->next;
-
-            if (current == tail)
-            {
-                // node to delete is at the tail
-                tail = current->prev;
-            }
-            else
-            {
-                current->next->prev = current->prev;
-            }
-
-            delete current;
-            return;
-        }
-
-        current = current->next;
-    }
-}
-
 // Appends a node to the end (tail) of the linked list.
-void LinkedList::append(int data)
+void LinkedList::appendNode(int data)
 {
 
     Node *newNode = new Node(data);
@@ -185,6 +229,8 @@ void LinkedList::append(int data)
         newNode->prev = tail;
         tail = newNode;
     }
+
+    size++;
 }
 
 void LinkedList::displayNodes()

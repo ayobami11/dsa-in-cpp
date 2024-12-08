@@ -4,27 +4,28 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
 
-    LinkedList *list = new LinkedList();
+	LinkedList* list = new LinkedList();
 
-    list->append(10);
-    list->append(20);
-    list->append(30);
+	list->appendNode(10);
+	list->appendNode(20);
+	list->appendNode(30);
+	list->appendNode(40);
+	list->appendNode(50);
 
-    list->insertAt(0, 5);
-    list->insertAfter(20, 25);
+	list->insertNodeAt(0, 5);
+	list->insertAfter(20, 25);
 
-    list->append(400);
-    list->deleteNode(400);
+	list->appendNode(400);
+	list->deleteNode(400);
 
-    list->displayNodes();
-    list->displayNodesReverse();
+	list->displayNodes();
+	list->displayNodesReverse();
 
-    cout << endl;
+	cout << endl;
 
-    system("pause");
+	system("pause");
 
-    return 0;
+	return 0;
 }
