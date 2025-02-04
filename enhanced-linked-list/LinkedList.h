@@ -36,6 +36,7 @@ public:
     void displayNodes();
     void displayNodesReverse();
     void deleteNodeByIndex(int);
+    // deletes only the first occurrence of the value
     void deleteNodeByValue(int);
     // returns the value of a node provided its index
     int peek(int);
@@ -45,4 +46,9 @@ public:
     void insertAfter(int, int);
     void insertBefore(int, int);
     void destroyList();
+
+    int countOccurrences(int);
+    // deletes all occurrences of the value
+    void deleteNodesByValue(int);
+    int getSize();
 };

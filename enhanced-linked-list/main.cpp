@@ -18,10 +18,22 @@ int main()
     list->insertBefore(55, 45);
     list->insertBefore(25, 5);
 
+    list->appendNode(25);
+    list->appendNode(25);
+    list->appendNode(25);
+    list->appendNode(25);
+    list->appendNode(5);
+
     // list->destroyList();
+
+    cout << list->countOccurrences(25) << endl;
+    list->deleteNodesByValue(25);
+    cout << list->countOccurrences(25) << endl;
 
     list->displayNodes();
     list->displayNodesReverse();
+
+    cout << list->getSize() << endl;
 
     system("pause");
 

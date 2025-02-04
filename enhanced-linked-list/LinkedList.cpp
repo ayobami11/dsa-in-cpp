@@ -86,22 +86,18 @@ void LinkedList::deleteNodeByIndex(int index)
 void LinkedList::deleteNodeByValue(int value)
 {
 
-    if (tail != NULL)
+    Node *current = head;
+
+    while (current != NULL)
     {
 
-        Node *current = head;
-
-        while (current != NULL)
+        if (current->data == value)
         {
-
-            if (current->data == value)
-            {
-                removeNode(current);
-                break;
-            }
-
-            current = current->next;
+            removeNode(current);
+            break;
         }
+
+        current = current->next;
     }
 }
 
@@ -279,4 +275,49 @@ void LinkedList::destroyList()
 
     head = NULL;
     tail = NULL;
+}
+
+int LinkedList::countOccurrences(int value)
+{
+
+    int count = 0;
+
+    Node *current = head;
+
+    while (current != NULL)
+    {
+        if (current->data == value)
+            count++;
+
+        current = current->next;
+    }
+
+    return count;
+}
+
+void LinkedList::deleteNodesByValue(int value)
+{
+
+    Node *current = head;
+
+    while (current != NULL)
+    {
+
+        if (current->data == value)
+        {
+            Node *next = current->next;
+
+            removeNode(current);
+
+            current = next;
+            continue;
+        }
+
+        current = current->next;
+    }
+}
+
+int LinkedList::getSize()
+{
+    return size;
 }
